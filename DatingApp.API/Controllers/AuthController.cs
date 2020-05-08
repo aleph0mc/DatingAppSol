@@ -80,6 +80,7 @@ namespace DatingApp.API.Controllers
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
+            //It's possible to check the token steucture in https://jwt.io
             return Ok(new
             {
                 token = tokenHandler.WriteToken(token)
