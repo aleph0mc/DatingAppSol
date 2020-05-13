@@ -21,15 +21,15 @@ export class ErrorInterceptor implements HttpInterceptor {
             return throwError(applicationError);
           }
           const serverError = error.error;
-          let modalStateErrors = '';
+          let modelStateErrors = '';
           if (serverError.errors && typeof serverError.errors === 'object') {
             for (const key in serverError.errors) {
               if (serverError.errors[key]) {
-                modalStateErrors += serverError.errors[key] + '\n';
+                modelStateErrors += serverError.errors[key] + '\n';
               }
             }
           }
-          return throwError(modalStateErrors || serverError || 'Server Error')
+          return throwError(modelStateErrors || serverError || 'Server Error')
         }
       })
     )
