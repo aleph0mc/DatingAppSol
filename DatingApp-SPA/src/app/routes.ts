@@ -7,7 +7,7 @@ import { AuthGuard } from './_guards/auth.guard';
 
 export const appRoutes: Routes = [
   { path: '', component: HomeComponent }, //= home
-  { path: 'home', component: HomeComponent },
+  { path: 'home', component: HomeComponent }, 
   {
     path: '',
     runGuardsAndResolvers: 'always',
