@@ -16,6 +16,15 @@ namespace DatingApp.API.Data
             _Context = Context;
         }
 
+        private void CreatePasswordHash(string password, out byte[] pwdHash, out byte[] pwdSalt)
+        {
+            using (var hmac = new System.Security.Cryptography.HMACSHA512())
+            {
+                pwdSalt = hmac.Key;
+                pwdHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+            }
+        }
+
         public DataContext Context { get; }
 
         public async Task<User> Login(string Username, string Password)
@@ -58,15 +67,6 @@ namespace DatingApp.API.Data
             await _Context.SaveChangesAsync();
 
             return Usr;
-        }
-
-        private void CreatePasswordHash(string password, out byte[] pwdHash, out byte[] pwdSalt)
-        {
-            using (var hmac = new System.Security.Cryptography.HMACSHA512())
-            {
-                pwdSalt = hmac.Key;
-                pwdHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-            }
         }
 
         public async Task<bool> UserExists(string Username)
