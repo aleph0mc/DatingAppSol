@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { error } from '@angular/compiler/src/util';
 
@@ -8,10 +8,14 @@ import { error } from '@angular/compiler/src/util';
   styleUrls: ['./value.component.css']
 })
 /** value component*/
-export class ValueComponent {
+export class ValueComponent implements OnInit {
   values: any;
   /** value ctor */
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient) { }
+
+  //This is called after the constructor when required.
+  //The constructor should only be used to initialize class members but shouldn't do actual "work".
+  ngOnInit(): void {
     this.getValues();
   }
 
