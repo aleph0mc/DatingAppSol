@@ -13,10 +13,10 @@ import { AuthService } from '../../_services/auth.service';
 })
 /** member-edit component*/
 export class MemberEditComponent implements OnInit {
-  @ViewChild('editForm', { static: true }) editForm: NgForm;
+  @ViewChild('editForm', { static: true }) editForm: NgForm; //access to form
   user: User;
 
-  @HostListener('window:beforeunload', ['$event'])
+  @HostListener('window:beforeunload', ['$event']) //access browser events
   unloadNotification($event: any) {
     if (this.editForm.dirty) {
       $event.returnValue = true;
