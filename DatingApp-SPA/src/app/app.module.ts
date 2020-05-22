@@ -1,5 +1,5 @@
 import { BrowserModule, HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, Pipe } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -23,6 +23,7 @@ import { MemberCardComponent } from './members/member-card/member-card.component
 import { MemberDetailComponent } from './members/member-detail/member-detail.component';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
+import { TimeAgoPipe } from 'time-ago-pipe'; //https://www.npmjs.com/package/time-ago-pipe
 
 import { AuthService } from './_services/auth.service';
 import { AlertifyService } from './_services/alertify.service';
@@ -48,6 +49,13 @@ export class CustomHammerConfig extends HammerGestureConfig {
   };
 }
 
+//IMPORTANT: TimeAgoPipe EXTENSION REQUIRED FOR COMPATIBILITY WITH THIS ANGULA VERSION
+@Pipe({
+  name: 'timeAgo',
+  pure: true
+})
+export class TimeAgoExtendsPipe extends TimeAgoPipe { }
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,7 +69,8 @@ export class CustomHammerConfig extends HammerGestureConfig {
     MemberCardComponent,
     MemberDetailComponent,
     MemberEditComponent,
-    PhotoEditorComponent
+    PhotoEditorComponent,
+    TimeAgoExtendsPipe
   ],
   imports: [
     BrowserModule,

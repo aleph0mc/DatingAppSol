@@ -31,3 +31,7 @@ https://caniuse.com
 
 # Third party HTML components - NGX Bootstrap
 https://valor-software.com/ngx-bootstrap/#/
+
+# Time Ago Pipe - To show date as time lapse (1 minute ago, 1 hour ago...)
+https://www.npmjs.com/package/time-ago-pipe
+

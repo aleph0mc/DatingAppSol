@@ -47,6 +47,7 @@ namespace DatingApp.API
             services.AddAutoMapper(typeof(DatingRepository).Assembly);
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IDatingRepository, DatingRepository>();
+            services.AddScoped<UserActivityActionFilter>(); //TO UPDATE THE LastActive field
 
             //Authentication used
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
