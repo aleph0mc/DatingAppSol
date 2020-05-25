@@ -3,12 +3,16 @@ import { NgModule, Pipe } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+//https://valor-software.com/ngx-bootstrap/#/ -----------------------
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TabsModule } from 'ngx-bootstrap/tabs';
-import { RouterModule } from '@angular/router';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
+// ------------------------------------------------------------------
 import { NgxGalleryModule } from '@kolkov/ngx-gallery'; //https://github.com/kolkov/ngx-gallery
 import { FileUploadModule } from 'ng2-file-upload';
+import { RouterModule } from '@angular/router';
 import { JwtModule } from '@auth0/angular-jwt';
 
 import { AppComponent } from './app.component';
@@ -49,7 +53,7 @@ export class CustomHammerConfig extends HammerGestureConfig {
   };
 }
 
-//IMPORTANT: TimeAgoPipe EXTENSION REQUIRED FOR COMPATIBILITY WITH THIS ANGULA VERSION
+//IMPORTANT: TimeAgoPipe EXTENSION REQUIRED FOR COMPATIBILITY WITH THIS ANGULAR VERSION
 @Pipe({
   name: 'timeAgo',
   pure: true
@@ -82,6 +86,8 @@ export class TimeAgoExtendsPipe extends TimeAgoPipe { }
     BsDatepickerModule.forRoot(),
     TabsModule.forRoot(),
     RouterModule.forRoot(appRoutes),
+    PaginationModule.forRoot(),
+    ButtonsModule.forRoot(),
     NgxGalleryModule,
     FileUploadModule,
     ReactiveFormsModule,
