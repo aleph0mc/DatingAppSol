@@ -40,6 +40,7 @@ import { MemberListResolver } from './_resolvers/member-list.resolver';
 import { MemberEditResolver } from './_resolvers/member-edit.resolver';
 import { PreventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.guard';
 import { Browser } from 'protractor';
+import { ListsResolver } from './_resolvers/lists.resolver';
 
 //USED TO INJECT AUTOMATICALLY THE TOKEN
 export function tokenGetter() {
@@ -107,6 +108,7 @@ export class TimeAgoExtendsPipe extends TimeAgoPipe { }
     MemberListResolver,
     MemberEditResolver,
     PreventUnsavedChangesGuard,
+    ListsResolver,
     { provide: HAMMER_GESTURE_CONFIG, useClass: HammerGestureConfig },
     ErrorInterceptorProvider
   ],
