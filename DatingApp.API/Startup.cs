@@ -96,6 +96,11 @@ namespace DatingApp.API
             //For dev purposes - temporary all are allowed
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
+            //Following two lines required for production only
+            //to run Angular under Kestrel server /DatingApp.API/wwwroot
+            //app.UseDefaultFiles();
+            //app.UseStaticFiles();
+
             app.UseAuthentication();
 
             app.UseAuthorization();
@@ -103,6 +108,8 @@ namespace DatingApp.API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                //The following required only in production
+                //endpoints.MapFallbackToController("Index", "Fallback"); //Everything not API falls under this route => Angular
             });
         }
     }
