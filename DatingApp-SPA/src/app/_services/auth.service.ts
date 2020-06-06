@@ -19,7 +19,7 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   changeMemberPhoto(photoUrl: string) {
-    this.photoUrl.next(photoUrl);
+    this.photoUrl.next(photoUrl); //This is the new photoUrl
   }
 
   login(model: any) {
@@ -32,7 +32,7 @@ export class AuthService {
             localStorage.setItem('user', JSON.stringify(user.user));
             this.currentUser = user.user;
             this.decodedToken = this.jwtHelper.decodeToken(user.token);
-            this.changeMemberPhoto(this.currentUser.photoUrl);
+            this.changeMemberPhoto(this.currentUser.photoUrl); //This updates the photoUrl
             console.log(this.decodedToken);
           }
         })

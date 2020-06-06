@@ -39,7 +39,8 @@ namespace DatingApp.API.Helpers
         {
             var paginationHeader = new PaginationHeader(CurrentPage, ItemsPerPage, TotalItems, TotalPages);
 
-            //USED TO RETURN DATA IN camelCase
+            //USED TO RETURN DATA IN camelCase for JavaScript
+            //CurrentPage => currentPage, etc.
             var camelCaseFormatter = new JsonSerializerSettings();
             camelCaseFormatter.ContractResolver = new CamelCasePropertyNamesContractResolver();
 

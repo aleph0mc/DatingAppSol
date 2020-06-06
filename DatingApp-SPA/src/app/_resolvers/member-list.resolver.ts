@@ -8,8 +8,8 @@ import { of, Observable } from 'rxjs';
 
 @Injectable()
 export class MemberListResolver implements Resolve<User[]> {
-  pageNumber = 1;
-  pageSize = 5;
+  pageNumber = 1; //default value for page number
+  pageSize = 5; //default value for page size
 
   constructor(private userService: UserService, private router: Router,
     private alertify: AlertifyService) { }

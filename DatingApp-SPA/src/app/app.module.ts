@@ -1,5 +1,9 @@
-import { BrowserModule, HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
-import { NgModule, Pipe } from '@angular/core';
+import {
+  BrowserModule,
+  HammerGestureConfig,
+  HAMMER_GESTURE_CONFIG,
+} from '@angular/platform-browser';
+import { NgModule, Pipe, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -28,6 +32,7 @@ import { MemberDetailComponent } from './members/member-detail/member-detail.com
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 import { TimeAgoPipe } from 'time-ago-pipe'; //https://www.npmjs.com/package/time-ago-pipe
+import { MemberMessagesComponent } from './members/member-messages/member-messages.component';
 
 import { AuthService } from './_services/auth.service';
 import { AlertifyService } from './_services/alertify.service';
@@ -39,8 +44,8 @@ import { MemberDetailResolver } from './_resolvers/member-detail.resolver';
 import { MemberListResolver } from './_resolvers/member-list.resolver';
 import { MemberEditResolver } from './_resolvers/member-edit.resolver';
 import { PreventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.guard';
-import { Browser } from 'protractor';
 import { ListsResolver } from './_resolvers/lists.resolver';
+import { MessagesResolver } from './_resolvers/messages-resolver';
 
 //USED TO INJECT AUTOMATICALLY THE TOKEN
 export function tokenGetter() {
@@ -57,9 +62,9 @@ export class CustomHammerConfig extends HammerGestureConfig {
 //IMPORTANT: TimeAgoPipe EXTENSION REQUIRED FOR COMPATIBILITY WITH THIS ANGULAR VERSION
 @Pipe({
   name: 'timeAgo',
-  pure: true
+  pure: true,
 })
-export class TimeAgoExtendsPipe extends TimeAgoPipe { }
+export class TimeAgoExtendsPipe extends TimeAgoPipe {}
 
 @NgModule({
   declarations: [
@@ -75,7 +80,8 @@ export class TimeAgoExtendsPipe extends TimeAgoPipe { }
     MemberDetailComponent,
     MemberEditComponent,
     PhotoEditorComponent,
-    TimeAgoExtendsPipe
+    TimeAgoExtendsPipe,
+    MemberMessagesComponent,
   ],
   imports: [
     BrowserModule,
@@ -92,13 +98,14 @@ export class TimeAgoExtendsPipe extends TimeAgoPipe { }
     NgxGalleryModule,
     FileUploadModule,
     ReactiveFormsModule,
-    JwtModule.forRoot({ //USED TO INJECT AUTOMATICALLY THE TOKEN
+    JwtModule.forRoot({
+      //USED TO INJECT AUTOMATICALLY THE TOKEN
       config: {
         tokenGetter: tokenGetter,
         whitelistedDomains: ['localhost:5000'],
-        blacklistedRoutes: ['localhost/5000/api/auth']
-      }
-    })
+        blacklistedRoutes: ['localhost/5000/api/auth'],
+      },
+    }),
   ],
   providers: [
     AuthService,
@@ -109,9 +116,12 @@ export class TimeAgoExtendsPipe extends TimeAgoPipe { }
     MemberEditResolver,
     PreventUnsavedChangesGuard,
     ListsResolver,
+    MessagesResolver,
     { provide: HAMMER_GESTURE_CONFIG, useClass: HammerGestureConfig },
-    ErrorInterceptorProvider
+    ErrorInterceptorProvider,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+
 })
-export class AppModule { }
+export class AppModule {}
