@@ -1,3 +1,4 @@
 {
-    "prettier.endOfLine": "crlf"
+    "prettier.endOfLine": "crlf",
+    "workbench.editor.enablePreview": false
 }

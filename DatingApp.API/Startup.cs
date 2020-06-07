@@ -33,11 +33,33 @@ namespace DatingApp.API
 
         public IConfiguration Configuration { get; }
 
+        // The following 2 methods are convension based for .Net Core,
+        // therefore it is important to keep the names exactly as they are
+        public void ConfigureDevelopmentServices(IServiceCollection services)
+        {
+            services.AddDbContext<DataContext>(x =>
+            {
+                x.UseLazyLoadingProxies();
+                x.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
+            });
+
+            ConfigureServices(services);
+        }
+        public void ConfigureProductionServices(IServiceCollection services)
+        {
+            services.AddDbContext<DataContext>(x =>
+            {
+                x.UseLazyLoadingProxies();
+                x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            });
+
+            ConfigureServices(services);
+        }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllers().AddNewtonsoftJson(opt =>
             {
                 opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
