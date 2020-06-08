@@ -96,6 +96,8 @@ namespace DatingApp.API
             }
             else
             {
+                //FOLLOWING LINES TO COMMENT OUT FOR AZURE TEST DEPLOY ONLY THEN MUST BE UNCOMMENTED
+                // AFTER THE TEST DEPLOY -----------------------------------------------------------
                 app.UseExceptionHandler(builder =>
                 {
                     builder.Run(async context =>
@@ -110,15 +112,17 @@ namespace DatingApp.API
                         }
                     });
                 });
+                //TO HERE --------------------------------------------------------------------------
+                //app.UseHsts(); //FOR AZURE
             }
-
-            //app.UseHttpsRedirection();
+            //app.UseDeveloperExceptionPage(); //FOR AZURE TEST DEPLOY ONLY THEN MUST BE COMMENTED OUT AFTER THE TEST DEPLOY
+            //app.UseHttpsRedirection(); //FOR AZURE
 
             app.UseRouting();
             //For dev purposes - temporary all are allowed
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
-            //Following two lines required for production only
+            //Following two lines required for PRODUCTION only
             //to run Angular under Kestrel server /DatingApp.API/wwwroot
             //app.UseDefaultFiles();
             //app.UseStaticFiles();
@@ -130,7 +134,7 @@ namespace DatingApp.API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                //The following required only in production
+                //The following required only in PRODUCTION
                 //endpoints.MapFallbackToController("Index", "Fallback"); //Everything not API falls under this route => Angular
             });
         }
