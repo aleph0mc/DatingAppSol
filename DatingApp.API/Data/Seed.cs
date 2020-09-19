@@ -1,4 +1,5 @@
 ﻿using DatingApp.API.Models;
+using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -9,35 +10,16 @@ namespace DatingApp.API.Data
 {
     public class Seed
     {
-
-        private static void CreatePasswordHash(string password, out byte[] pwdHash, out byte[] pwdSalt)
+        public static void SeedUsers(UserManager<User> userManager)
         {
-            using (var hmac = new System.Security.Cryptography.HMACSHA512())
-            {
-                pwdSalt = hmac.Key;
-                pwdHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-            }
-        }
-
-        public static void SeedUsers(DataContext context)
-        {
-            if (!context.Users.Any())
+            if (!userManager.Users.Any())
             {
                 var userData = System.IO.File.ReadAllText("Data/UserSeedData.json");
                 var users = JsonConvert.DeserializeObject<List<User>>(userData);
-
-                foreach (var user in users)
+                users.ForEach(user =>
                 {
-                    byte[] pwdHash, pwdSalt;
-                    CreatePasswordHash("password", out pwdHash, out pwdSalt);
-                    user.PasswordHash = pwdHash;
-                    user.PasswordSalt = pwdSalt;
-                    user.Username = user.Username.ToLower();
-
-                    context.Users.Add(user);
-                }
-
-                context.SaveChanges();
+                    userManager.CreateAsync(user, "password").Wait();
+                });
             }
         }
     }

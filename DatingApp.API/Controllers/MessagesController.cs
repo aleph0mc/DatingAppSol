@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 namespace DatingApp.API.Controllers
 {
     [ServiceFilter(typeof(UserActivityActionFilter))]
-    [Authorize]
     [Route("api/[controller]/{userid}")]
     [ApiController]
     public class MessagesController : ControllerBase

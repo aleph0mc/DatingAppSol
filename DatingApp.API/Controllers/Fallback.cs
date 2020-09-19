@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.IO;
 
 namespace DatingApp.API.Controllers
 {
+    [AllowAnonymous]
     /// <summary>
     /// Required only in production to preserve Angular routing
     /// </summary>
