@@ -1,0 +1,7 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/DatingApp-SPA/node_modules/.bin
+/DatingApp-SPA/node_modules
+/DatingApp.API/bin/Debug/netcoreapp3.1
