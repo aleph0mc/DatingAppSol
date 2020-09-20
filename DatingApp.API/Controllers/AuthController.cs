@@ -64,7 +64,7 @@ namespace DatingApp.API.Controllers
         public async Task<IActionResult> Register(UserForRegisterDto UsrForRegisterDto)
         {
             //validate request
-            //if [ApiController] is removed we need to valida the model against the ModelState
+            //if [ApiController] is removed we need to validate the model against the ModelState
             //if (!ModelState.IsValid)
             //    return BadRequest(ModelState);
 
