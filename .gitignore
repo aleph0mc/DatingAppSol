@@ -6,5 +6,5 @@
 /DatingApp-SPA/node_modules
 /DatingApp.API/bin/Debug/netcoreapp3.1
 /DatingApp.API/obj
-.vs/DatingAppSol/v16/.suo
+/.vs/
 /DatingApp.API/appsettings.Production.json
