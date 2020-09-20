@@ -1,4 +1,6 @@
-﻿using DatingApp.API.Models;
+﻿// THIS CAN BE REMOVED AS IT NOT USED ANYMORE -- IDENTIRYSERVER4 TAKES CARE OF AUTHORIZATION
+
+using DatingApp.API.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

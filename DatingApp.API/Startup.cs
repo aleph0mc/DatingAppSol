@@ -112,7 +112,6 @@ namespace DatingApp.API
             services.AddCors(); //CORS service to be trusted in browsers
             services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
             services.AddAutoMapper(typeof(DatingRepository).Assembly);
-            services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IDatingRepository, DatingRepository>();
             services.AddScoped<UserActivityActionFilter>(); //TO UPDATE THE LastActive field
         }
