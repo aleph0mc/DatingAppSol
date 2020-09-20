@@ -23,12 +23,13 @@ namespace DatingApp.API
                 {
                     var context = services.GetRequiredService<DataContext>();
                     var userManager = services.GetRequiredService<UserManager<User>>();
+                    var roleManager = services.GetRequiredService<RoleManager<Role>>();
 
                     //With this method no need to use "dotnet ef migrations"
                     //this command takes care of migration in case not applied beforehand.
                     context.Database.Migrate();
                     //Add dummy data
-                    Seed.SeedUsers(userManager);
+                    Seed.SeedUsers(userManager, roleManager);
                 }
                 catch (System.Exception ex)
                 {
