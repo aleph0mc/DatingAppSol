@@ -107,8 +107,17 @@ namespace DatingApp.API
                 opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
 
+            // Authorization based on Policy
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
+                options.AddPolicy("RequireModerateRole", policy => policy.RequireRole("Admin", "Moderator"));
+                options.AddPolicy("VipOnly", policy => policy.RequireRole("VIP"));
+            });
+
             // ---------------------------------
-            
+
             services.AddCors(); //CORS service to be trusted in browsers
             services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
             services.AddAutoMapper(typeof(DatingRepository).Assembly);
