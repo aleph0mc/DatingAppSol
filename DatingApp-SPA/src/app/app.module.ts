@@ -48,6 +48,10 @@ import { PreventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.gu
 import { ListsResolver } from './_resolvers/lists.resolver';
 import { MessagesResolver } from './_resolvers/messages-resolver';
 
+// Custom directives
+import { HasRoleDirective } from './_directives/has-role.directive';
+
+
 // USED TO INJECT AUTOMATICALLY THE TOKEN
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -83,7 +87,8 @@ export class TimeAgoExtendsPipe extends TimeAgoPipe implements PipeTransform {}
     PhotoEditorComponent,
     TimeAgoExtendsPipe,
     MemberMessagesComponent,
-    AdminPanelComponent
+    AdminPanelComponent,
+    HasRoleDirective
   ],
   imports: [
     BrowserModule,

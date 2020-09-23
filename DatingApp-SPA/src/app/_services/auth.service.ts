@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { JwtHelperService } from '@auth0/angular-jwt'
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { environment } from '../../environments/environment';
 import { User } from '../_models/user';
 
-import { BehaviorSubject } from 'rxjs'; //USED FOR COMMUNICATION IN ANY TO ANY COMPONENT
+import { BehaviorSubject } from 'rxjs'; // USED FOR COMMUNICATION IN ANY TO ANY COMPONENT
 
 @Injectable()
 export class AuthService {
@@ -13,30 +13,29 @@ export class AuthService {
   jwtHelper = new JwtHelperService();
   decodedToken: any;
   currentUser: User;
-  photoUrl = new BehaviorSubject<string>('../../assets/user.png'); //AN INITIAL VALUE IS SPECIFIED
+  photoUrl = new BehaviorSubject<string>('../../assets/user.png'); // AN INITIAL VALUE IS SPECIFIED
   currentPhotoUrl = this.photoUrl.asObservable();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   changeMemberPhoto(photoUrl: string) {
-    this.photoUrl.next(photoUrl); //This is the new photoUrl
+    this.photoUrl.next(photoUrl); // This is the new photoUrl
   }
 
   login(model: any) {
-    return this.http.post(this.baseUrl + 'login', model)
-      .pipe(
-        map((response: any) => {
-          const user = response;
-          if (user) {
-            localStorage.setItem('token', user.token);
-            localStorage.setItem('user', JSON.stringify(user.user));
-            this.currentUser = user.user;
-            this.decodedToken = this.jwtHelper.decodeToken(user.token);
-            this.changeMemberPhoto(this.currentUser.photoUrl); //This updates the photoUrl
-            console.log(this.decodedToken);
-          }
-        })
-      )
+    return this.http.post(this.baseUrl + 'login', model).pipe(
+      map((response: any) => {
+        const user = response;
+        if (user) {
+          localStorage.setItem('token', user.token);
+          localStorage.setItem('user', JSON.stringify(user.user));
+          this.currentUser = user.user;
+          this.decodedToken = this.jwtHelper.decodeToken(user.token);
+          this.changeMemberPhoto(this.currentUser.photoUrl); // This updates the photoUrl
+          console.log(this.decodedToken);
+        }
+      })
+    );
   }
 
   register(user: User) {
@@ -46,5 +45,17 @@ export class AuthService {
   loggedIn() {
     const token = localStorage.getItem('token');
     return !this.jwtHelper.isTokenExpired(token);
+  }
+
+  roleMatch(allowedRoles: Array<string>): boolean {
+    let isMatch = false;
+    const userRoles = this.decodedToken.role as Array<string>;
+    allowedRoles.forEach((element) => {
+      if (userRoles.includes(element)) {
+        isMatch = true;
+        return;
+      }
+    });
+    return isMatch;
   }
 }
