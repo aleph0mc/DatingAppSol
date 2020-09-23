@@ -36,7 +36,7 @@ namespace DatingApp.API.Controllers
             _signInManager = signInManager;
         }
 
-        private async  Task<string> GenerateJwtToken(User user)
+        private async Task<string> GenerateJwtToken(User user)
         {
             var claims = new List<Claim>
             {
@@ -106,7 +106,7 @@ namespace DatingApp.API.Controllers
 
                 return Ok(new
                 {
-                    token = GenerateJwtToken(user),
+                    token = await GenerateJwtToken(user),
                     user = appUser
                 });
             }

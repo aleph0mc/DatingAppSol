@@ -12,9 +12,10 @@ import { MemberEditResolver } from './_resolvers/member-edit.resolver';
 import { PreventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.guard';
 import { ListsResolver } from './_resolvers/lists.resolver';
 import { MessagesResolver } from './_resolvers/messages-resolver';
+import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 
 export const appRoutes: Routes = [
-  { path: '', component: HomeComponent }, //= home
+  { path: '', component: HomeComponent }, // = home
   { path: 'home', component: HomeComponent },
   {
     path: '',
@@ -31,7 +32,7 @@ export const appRoutes: Routes = [
         component: MemberEditComponent,
         resolve: { user: MemberEditResolver },
         canDeactivate: [PreventUnsavedChangesGuard],
-      }, //the id got from the token
+      }, // the id got from the token
       {
         path: 'members/:id',
         component: MemberDetailComponent,
@@ -47,11 +48,15 @@ export const appRoutes: Routes = [
         component: ListsComponent,
         resolve: { users: ListsResolver },
       },
+      {
+        path: 'admin',
+        component: AdminPanelComponent,
+      },
     ],
   },
-  //{ path: 'members', component: MemberListComponent },
-  //{ path: 'messages', component: MessagesComponent },
-  //{ path: 'lists', component: ListsComponent },
-  //{ path: '**', redirectTo: 'home', pathMatch: 'full' }
-  { path: '**', redirectTo: '', pathMatch: 'full' }, //redirect to home
+  // { path: 'members', component: MemberListComponent },
+  // { path: 'messages', component: MessagesComponent },
+  // { path: 'lists', component: ListsComponent },
+  // { path: '**', redirectTo: 'home', pathMatch: 'full' }
+  { path: '**', redirectTo: '', pathMatch: 'full' }, // redirect to home
 ];

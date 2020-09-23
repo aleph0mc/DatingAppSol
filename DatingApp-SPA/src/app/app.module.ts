@@ -33,6 +33,7 @@ import { MemberEditComponent } from './members/member-edit/member-edit.component
 import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 import { TimeAgoPipe } from 'time-ago-pipe'; // https://www.npmjs.com/package/time-ago-pipe
 import { MemberMessagesComponent } from './members/member-messages/member-messages.component';
+import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 
 import { AuthService } from './_services/auth.service';
 import { AlertifyService } from './_services/alertify.service';
@@ -82,6 +83,7 @@ export class TimeAgoExtendsPipe extends TimeAgoPipe implements PipeTransform {}
     PhotoEditorComponent,
     TimeAgoExtendsPipe,
     MemberMessagesComponent,
+    AdminPanelComponent
   ],
   imports: [
     BrowserModule,
