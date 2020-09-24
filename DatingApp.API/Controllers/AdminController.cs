@@ -45,17 +45,17 @@ namespace DatingApp.API.Controllers
         public async Task<ActionResult<IEnumerable<object>>> GetUsersWithRoles()
         {
             var userList = await _context.Users
-                           .OrderBy(x => x.UserName)
-                           .Select(user => new
-                           {
-                               Id = user.Id,
-                               UserName = user.UserName,
-                               Roles = (from userRole in user.UserRoles
-                                        join role in _context.Roles
-                                        on userRole.RoleId
-                                        equals role.Id
-                                        select role.Name).ToList()
-                           }).ToListAsync();
+                .OrderBy(x => x.UserName)
+                .Select(user => new
+                {
+                    Id = user.Id,
+                    UserName = user.UserName,
+                    Roles = (from userRole in user.UserRoles
+                            join role in _context.Roles
+                            on userRole.RoleId
+                            equals role.Id
+                            select role.Name).ToList()
+                }).ToListAsync();
 
             return Ok(userList);
         }
@@ -90,16 +90,16 @@ namespace DatingApp.API.Controllers
         public async Task<IActionResult> GetPhotosForModeration()
         {
             var photos = await _context.Photos
-                            .Include(u => u.User)
-                            .IgnoreQueryFilters()
-                            .Where(p => p.IsApproved == false)
-                            .Select(u => new
-                            {
-                                Id = u.Id,
-                                UserName = u.User.UserName,
-                                Url = u.Url,
-                                IsApproved = u.IsApproved
-                            }).ToListAsync();
+                .Include(u => u.User)
+                .IgnoreQueryFilters()
+                .Where(p => p.IsApproved == false)
+                .Select(u => new
+                {
+                    Id = u.Id,
+                    UserName = u.User.UserName,
+                    Url = u.Url,
+                    IsApproved = u.IsApproved
+                }).ToListAsync();
 
             return Ok(photos);
         }
@@ -108,9 +108,7 @@ namespace DatingApp.API.Controllers
         [HttpPost("approvePhoto/{photoId}")]
         public async Task<IActionResult> ApprovePhoto(int photoId)
         {
-            var photo = await _context.Photos
-                .IgnoreQueryFilters()
-                .FirstOrDefaultAsync(p => p.Id == photoId);
+            var photo = await _context.Photos.IgnoreQueryFilters().FirstOrDefaultAsync(p => p.Id == photoId);
 
             photo.IsApproved = true;
 
