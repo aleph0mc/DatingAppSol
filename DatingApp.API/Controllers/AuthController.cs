@@ -79,9 +79,12 @@ namespace DatingApp.API.Controllers
 
             var result = await _userManager.CreateAsync(userToCreate, UsrForRegisterDto.Password);
 
+            // Add the default role Member to the user
+            var resultUserRole = await _userManager.AddToRoleAsync(userToCreate, "Member");
+
             var userToReturn = _Mapper.Map<UserForDetailedDto>(userToCreate);
 
-            if (result.Succeeded)
+            if (result.Succeeded && resultUserRole.Succeeded)
             {
                 return CreatedAtRoute("GetUser", new
                 {

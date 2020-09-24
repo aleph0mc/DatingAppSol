@@ -3,7 +3,12 @@ import {
   HammerGestureConfig,
   HAMMER_GESTURE_CONFIG,
 } from '@angular/platform-browser';
-import { NgModule, Pipe, CUSTOM_ELEMENTS_SCHEMA, PipeTransform } from '@angular/core';
+import {
+  NgModule,
+  Pipe,
+  CUSTOM_ELEMENTS_SCHEMA,
+  PipeTransform,
+} from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -13,6 +18,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
+import { ModalModule } from 'ngx-bootstrap/modal';
 // ------------------------------------------------------------------
 import { NgxGalleryModule } from '@kolkov/ngx-gallery'; // https://github.com/kolkov/ngx-gallery
 import { FileUploadModule } from 'ng2-file-upload';
@@ -34,10 +40,14 @@ import { PhotoEditorComponent } from './members/photo-editor/photo-editor.compon
 import { TimeAgoPipe } from 'time-ago-pipe'; // https://www.npmjs.com/package/time-ago-pipe
 import { MemberMessagesComponent } from './members/member-messages/member-messages.component';
 import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
+import { UserManagementComponent } from './admin/user-management/user-management.component';
+import { PhotoManagementComponent } from './admin/photo-management/photo-management.component';
+import { RolesModalComponent } from './admin/roles-modal/roles-modal.component';
 
 import { AuthService } from './_services/auth.service';
 import { AlertifyService } from './_services/alertify.service';
 import { UserService } from './_services/user.service';
+import { AdminService } from './_services/admin.service';
 
 import { ErrorInterceptorProvider } from './_services/error.interceptor';
 import { appRoutes } from './routes';
@@ -50,7 +60,6 @@ import { MessagesResolver } from './_resolvers/messages-resolver';
 
 // Custom directives
 import { HasRoleDirective } from './_directives/has-role.directive';
-
 
 // USED TO INJECT AUTOMATICALLY THE TOKEN
 export function tokenGetter() {
@@ -88,7 +97,10 @@ export class TimeAgoExtendsPipe extends TimeAgoPipe implements PipeTransform {}
     TimeAgoExtendsPipe,
     MemberMessagesComponent,
     AdminPanelComponent,
-    HasRoleDirective
+    HasRoleDirective,
+    UserManagementComponent,
+    PhotoManagementComponent,
+    RolesModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -102,6 +114,7 @@ export class TimeAgoExtendsPipe extends TimeAgoPipe implements PipeTransform {}
     RouterModule.forRoot(appRoutes),
     PaginationModule.forRoot(),
     ButtonsModule.forRoot(),
+    ModalModule.forRoot(),
     NgxGalleryModule,
     FileUploadModule,
     ReactiveFormsModule,
@@ -126,9 +139,9 @@ export class TimeAgoExtendsPipe extends TimeAgoPipe implements PipeTransform {}
     MessagesResolver,
     { provide: HAMMER_GESTURE_CONFIG, useClass: HammerGestureConfig },
     ErrorInterceptorProvider,
+    AdminService,
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-
 })
 export class AppModule {}
