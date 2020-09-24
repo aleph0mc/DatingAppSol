@@ -1,5 +1,6 @@
 {
     "prettier.endOfLine": "crlf",
     "workbench.editor.enablePreview": false,
-    "git.ignoreLimitWarning": true
+    "git.ignoreLimitWarning": true,
+    "editor.minimap.maxColumn": 200
 }
