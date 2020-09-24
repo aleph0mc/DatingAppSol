@@ -69,6 +69,10 @@ namespace DatingApp.API.Data
                 .WithMany(m => m.MessagesReceived)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            // Global query filter for the photos that are not yet approved.
+            // This filter can be ignored in the Linq query adding a .IgnoreQueryFilters() property
+            // (check DatingRepository.cs)
+            builder.Entity<Photo>().HasQueryFilter(p => p.IsApproved);
         }
     }
 }

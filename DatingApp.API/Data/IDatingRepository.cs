@@ -16,7 +16,7 @@ namespace DatingApp.API.Data
         //Task<IEnumerable<User>> GetUsers();
         //with the following to allow paging
         Task<PagedList<User>> GetUsers(UserParams UsrParams);
-        Task<User> GetUser(int Id);
+        Task<User> GetUser(int Id, bool IsCurrentUser);
         Task<Photo> GetPhoto(int Id);
         Task<Photo> GetMainPhotoFoUser(int UserId);
         Task<Like> GetLike(int UserId, int RecipientId);

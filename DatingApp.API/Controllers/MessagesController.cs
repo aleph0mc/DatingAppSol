@@ -76,7 +76,7 @@ namespace DatingApp.API.Controllers
         public async Task<IActionResult> CreateMessage(int userid, MessageForCreationDto messageForCreationDto)
         {
             //This is used automatically by Automapper to get the sender info for the object is in memory
-            var sender = await _Repo.GetUser(userid);
+            var sender = await _Repo.GetUser(userid, true);
 
             if (sender.Id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
@@ -84,7 +84,7 @@ namespace DatingApp.API.Controllers
             messageForCreationDto.SenderId = userid;
 
             //This is used automatically by Automapper to get the sender info for the object is in memory
-            var recipent = await _Repo.GetUser(messageForCreationDto.RecipientId);
+            var recipent = await _Repo.GetUser(messageForCreationDto.RecipientId, false);
 
             if (null == recipent)
                 return BadRequest("Could not find user");

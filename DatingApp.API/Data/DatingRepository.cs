@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 
 namespace DatingApp.API.Data
@@ -44,9 +45,16 @@ namespace DatingApp.API.Data
             return await _Context.Photos.FirstOrDefaultAsync(p => p.Id == Id);
         }
 
-        public async Task<User> GetUser(int Id)
+        public async Task<User> GetUser(int Id, bool IsCurrentUser)
         {
-            return await _Context.Users.FirstOrDefaultAsync(u => Id == u.Id);
+            var query = _Context.Users.Include(p => p.Photos).AsQueryable();
+
+            if (IsCurrentUser)
+                query = query.IgnoreQueryFilters();
+
+            var user = await query.FirstOrDefaultAsync(u => u.Id == Id);
+
+            return user;
         }
 
         private async Task<IEnumerable<int>> GetUserLikes(int id, bool likers)

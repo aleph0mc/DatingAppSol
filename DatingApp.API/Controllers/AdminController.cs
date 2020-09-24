@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
 using DatingApp.API.Data;
 using DatingApp.API.Dtos;
 using DatingApp.API.Helpers;
@@ -88,9 +89,67 @@ namespace DatingApp.API.Controllers
         [HttpGet("photosformoderation")]
         public async Task<IActionResult> GetPhotosForModeration()
         {
-            await Task.Delay(0);
+            var photos = await _context.Photos
+                            .Include(u => u.User)
+                            .IgnoreQueryFilters()
+                            .Where(p => p.IsApproved == false)
+                            .Select(u => new
+                            {
+                                Id = u.Id,
+                                UserName = u.User.UserName,
+                                Url = u.Url,
+                                IsApproved = u.IsApproved
+                            }).ToListAsync();
 
-            return Ok("Only admins or moderators can see this");
+            return Ok(photos);
+        }
+
+        [Authorize(Policy = "RequireModerateRole")]
+        [HttpPost("approvePhoto/{photoId}")]
+        public async Task<IActionResult> ApprovePhoto(int photoId)
+        {
+            var photo = await _context.Photos
+                .IgnoreQueryFilters()
+                .FirstOrDefaultAsync(p => p.Id == photoId);
+
+            photo.IsApproved = true;
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        [Authorize(Policy = "RequireModerateRole")]
+        [HttpPost("rejectPhoto/{photoId}")]
+        public async Task<IActionResult> RejectPhoto(int photoId)
+        {
+            var photo = await _context.Photos
+                .IgnoreQueryFilters()
+                .FirstOrDefaultAsync(p => p.Id == photoId);
+
+            if (photo.IsMain)
+                return BadRequest("You cannot reject the main photo");
+
+            if (photo.PublicId != null)
+            {
+                var deleteParams = new DeletionParams(photo.PublicId);
+
+                var result = _cloudinary.Destroy(deleteParams);
+
+                if (result.Result == "ok")
+                {
+                    _context.Photos.Remove(photo);
+                }
+            }
+
+            if (photo.PublicId == null)
+            {
+                _context.Photos.Remove(photo);
+            };
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
         }
     }
 }
